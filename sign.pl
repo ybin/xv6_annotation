@@ -1,5 +1,8 @@
 #!/usr/bin/perl
 
+# 检查bootblock大小(要求小于510 bytes)，并在最后添加标识: "\x55\xAA"，
+# 这个是启动扇区的标志。
+
 open(SIG, $ARGV[0]) || die "open $ARGV[0]: $!";
 
 $n = sysread(SIG, $buf, 1000);
