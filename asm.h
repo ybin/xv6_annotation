@@ -8,6 +8,8 @@
 
 // The 0xC0 means the limit is in 4096-byte units
 // and (for executable segments) 32-bit mode.
+// 0xC0表示设置的粒度为4K，因为limit只有20bit来表示，也就是1M个粒度，
+// 所以设置粒度为4K，这样整个4G空间都可以寻址了。
 #define SEG_ASM(type,base,lim)                                  \
         .word (((lim) >> 12) & 0xffff), ((base) & 0xffff);      \
         .byte (((base) >> 16) & 0xff), (0x90 | (type)),         \
