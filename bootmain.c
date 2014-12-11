@@ -10,6 +10,54 @@
 #include "x86.h"
 #include "memlayout.h"
 
+
+/*
+读取kernel数据到内存0x10000处，读取之后内存的样子如下:
+
+                   +-------------------+  4GB                 
+                   |                   |                      
+                   |                   |                      
+                   |                   |                      
+                   |                   |                      
+                   |                   |                      
+                   |                   |                      
+                   |                   |                      
+                   |                   |                      
+                   +-------------------+                      
+                   |                   |                      
+ (main.c)main() -> |      kernel       |                      
+                   |                   |                      
+        0x10000 -> +-------------------+                      
+                   |                   |                      
+                   |                   |                      
+   0x7c00 + 512 -> |                   |                      
+                   |                   |                      
+                   |                   |                      
+       .gdtdesc -> +-------------------+                      
+                   |                   |                      
+           .gdt -> +-----+-------------+ <- gdtr(GDT Register)
+                   |     |  seg null   |                      
+                   | GDT |  seg code   |                      
+                   |     |  seg data   |                      
+                   +-----+-------------+                      
+                   |                   |                      
+                   |                   |                      
+    bootmain()  -> |                   |                      
+                   |        code       |                      
+                   |                   |                      
+      .start32  -> |                   |                      
+                   |                   |                      
+(0x7c00).start  -> +---------+---------+ <- esp               
+                   |         |         |                      
+                   |         v         |                      
+                   |       stack       |                      
+                   |                   |                      
+                   |                   |                      
+                   +-------------------+  0GB                 
+
+ */
+ 
+
 #define SECTSIZE  512
 
 void readseg(uchar*, uint, uint);
