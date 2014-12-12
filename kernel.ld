@@ -8,9 +8,12 @@ ENTRY(_start)
 SECTIONS
 {
 	/* Link the kernel at this address: "." means the current address */
-        /* Must be equal to KERNLINK */
+    /* Must be equal to KERNLINK */
+    /* kernel的虚拟内存地址 */
 	. = 0x80100000;
 
+    /* kernel的物理内存地址，这个地址保存在elf->proghdr->paddr中，从磁盘读取kernel代码时会用到(bootmain.c::bootmain()::pa变量) */
+    /* 1MB，这跟kernel的memlayout正好对应起来，见memlayout.h */
 	.text : AT(0x100000) {
 		*(.text .stub .text.* .gnu.linkonce.t.*)
 	}

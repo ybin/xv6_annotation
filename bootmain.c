@@ -13,6 +13,10 @@
 
 /*
 读取kernel数据到内存0x10000处，读取之后内存的样子如下:
+0x10000(64KB)这个地方的内容只是暂时存放kernel img(elf文件)的hdr内容的，
+根据elf header的内容进一步读取kernel img的内容，实际的内容将会存在在
+1MB地址处，这个1MB地址是在kernel.ld中定义的(AT(0x100000))，这恰好跟
+kernel memlayout吻合起来，见memlayout.h。
 
                    +-------------------+  4GB                 
                    |                   |                      
@@ -27,11 +31,11 @@
                    |                   |                      
  (main.c)main() -> |      kernel       |                      
                    |                   |                      
-        0x10000 -> +-------------------+                      
+  0x100000(1MB) -> +-------------------+                      
                    |                   |                      
+  0x10000(64KB) -> +elf hdr of kern img+    (tmp content)                    
                    |                   |                      
    0x7c00 + 512 -> |                   |                      
-                   |                   |                      
                    |                   |                      
        .gdtdesc -> +-------------------+                      
                    |                   |                      
