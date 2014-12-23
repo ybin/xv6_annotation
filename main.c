@@ -9,7 +9,9 @@
 static void startothers(void);
 static void mpmain(void)  __attribute__((noreturn));
 extern pde_t *kpgdir;
-extern char end[]; // first address after kernel loaded from ELF file，end是在kernel.ld中定义的。
+// first address after kernel loaded from ELF file，end是在kernel.ld中定义的，
+// 它表示kernel img"之后"的第一个内存地址。
+extern char end[]; 
 
 // Bootstrap processor starts running C code here.
 // Allocate a real stack and switch to it, first
@@ -17,6 +19,7 @@ extern char end[]; // first address after kernel loaded from ELF file，end是在ke
 int
 main(void)
 {
+  // 初始化kernel img结束位置直到4M之间的虚拟内存
   kinit1(end, P2V(4*1024*1024)); // phys page allocator
   kvmalloc();      // kernel page table
   mpinit();        // collect info about this machine
@@ -36,6 +39,7 @@ main(void)
   if(!ismp)
     timerinit();   // uniprocessor timer
   startothers();   // start other processors
+  // 初始化4M直到PHYSTOP部分的内存
   kinit2(P2V(4*1024*1024), P2V(PHYSTOP)); // must come after startothers()
   userinit();      // first user process
   // Finish setting up this processor in mpmain.

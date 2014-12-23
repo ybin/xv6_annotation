@@ -11,11 +11,11 @@
 #include "mmu.h"
 #include "proc.h"
 
-struct cpu cpus[NCPU];
-static struct cpu *bcpu;
-int ismp;
-int ncpu;
-uchar ioapicid;
+struct cpu cpus[NCPU]; // 每个CPU一个数据结构来保存信息
+static struct cpu *bcpu; // boot cpu
+int ismp; // 是否多处理器
+int ncpu; // cpu数量
+uchar ioapicid; // I/O APIC id
 
 int
 mpbcpu(void)
@@ -50,7 +50,7 @@ mpsearch1(uint a, int len)
 
 // Search for the MP Floating Pointer Structure, which according to the
 // spec is in one of the following three locations:
-// 1) in the first KB of the EBDA;
+// 1) in the first KB of the EBDA(Extended BIOS Data Area);
 // 2) in the last KB of system base memory;
 // 3) in the BIOS ROM between 0xE0000 and 0xFFFFF.
 static struct mp*

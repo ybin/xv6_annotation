@@ -2,7 +2,7 @@
 #include "memlayout.h"
 #include "mmu.h"
 
-# 截止到"call bootmain"，内存状态如下图示:(语法高亮搞得有点儿走形啊)
+# 截止到"call bootmain"，内存状态如下图示:
 #
 #                    +-------------------+  4GB                  
 #                    |                   |                       

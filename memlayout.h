@@ -12,7 +12,7 @@
                |                    |              |   direct mapped    |                            
                |                    |              |   kernel memory    |                            
                |                    |              |                    |                            
-               |                    |              +--------------------+                            
+               |                    |              +--------------------+ end                        
                |                    |              |    Kernel Data     |                            
                |                    |              +--------------------+ data                       
                |                    |              |    Kernel Code     |                            
@@ -27,7 +27,7 @@ PHYSTOP(224MB) +--------------------+              |                    |
                |   direct mapped    |              |                    |                            
                |   kernel memory    |              |                    |                            
                |                    |              |                    |                            
-               +--------------------+              |                    |                            
+          end  +--------------------+              |                    |                            
                |    Kernel Data     |              |                    |                            
  data-KERNBASE +--------------------+              |                    |                            
                |    Kernel Code     |              |                    |                            
